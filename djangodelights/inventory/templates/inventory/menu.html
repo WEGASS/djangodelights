@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Menu</h1>
+<table>
+    <tr>
+        <th>name</th>
+        <th>price</th>
+        <th>available</th>
+        <th>recipe</th>
+   </tr>
+    <a href="{% url 'add_recipe' %}">Add new recipe for menu</a>
+  {% for menu in menuitem_list %}
+  <tr>
+      <td><a href="{% url 'update_menu' menu.pk%}">{{ menu.name }}</a></td>
+      <td>{{ menu.price }}</td>
+      <td>{{ menu.available }}</td>
+            <td><ul>
+            {%for recipe in menu.reciperequirement_set.all%}
+            <li>{{recipe.ingredient.name}} - {{recipe.quantity}} {{recipe.ingredient.unit}}</li>
+            {%endfor%}
+          </ul>
+      </td>
+      <td><a href="{% url 'delete_menu' menu.pk%}">Delete</a></td>
+  </tr>
+  {% endfor %}
+</table>
+<a href="{% url 'add_menu' %}">Add menu</a>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Recipes</h1>
+<table>
+    <tr>
+        <th>menu item</th>
+        <th>ingredient</th>
+        <th>qunatity</th>
+   </tr>
+  {% for recipe in reciperequirement_list %}
+  <tr>
+      <td><a href="{% url 'update_recipe' recipe.pk%}">{{ recipe.menu_item.name }}</a></td>
+      <td>{{ recipe.ingredient.name }}</td>
+      <td>{{ recipe.quantity }} {{ recipe.ingredient.unit }}</td>
+      <td><a href="{% url 'delete_recipe' recipe.pk%}">Delete</a></td>
+  </tr>
+  {% endfor %}
+</table>
+<a href="{% url 'add_recipe' %}">Add recipe</a>
+{% endblock %}

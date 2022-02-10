@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>All purchases</h1>
+<table>
+    <tr>
+        <th>Purchased items</th>
+        <th>Date time</th>
+        <th>Total cost</th>
+   </tr>
+  {%for purchase in purchase_list%}
+  <tr>
+      <td>{{ purchase.purchased_item.name }}</td>
+      <td>{{purchase.timestamp}}</td>
+      <td>{{purchase.purchased_item.price}}</td>
+  </tr>
+  {%endfor%}
+</table>
+<a href="{% url 'add_purchase' %}">Add purchase</a>
+{% endblock %}

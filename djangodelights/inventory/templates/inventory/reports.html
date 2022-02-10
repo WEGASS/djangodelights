@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+{% block content %}
+<h1>Reports</h1>
+<table>
+    <tr>
+        <th>Purchased items</th>
+        <th>Date time</th>
+        <th>Total cost</th>
+   </tr>
+  {%for purchase in purchases%}
+  <tr>
+      <td>{{ purchase.purchased_item.name }}</td>
+      <td>{{purchase.timestamp}}</td>
+      <td>{{purchase.purchased_item.price}}</td>
+  </tr>
+  {%endfor%}
+</table>
+Total revenue: {{total_revenue}}
+Total cost: {{total_cost}}
+Total profit: {{profit}}
+{% endblock %}
