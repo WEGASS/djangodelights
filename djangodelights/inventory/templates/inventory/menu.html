@@ -1,29 +1,34 @@
-{% extends 'base.html' %}
-
-{% block content %}
-<h1>Menu</h1>
-<table>
-    <tr>
-        <th>name</th>
-        <th>price</th>
-        <th>available</th>
-        <th>recipe</th>
-   </tr>
-    <a href="{% url 'add_recipe' %}">Add new recipe for menu</a>
-  {% for menu in menuitem_list %}
-  <tr>
-      <td><a href="{% url 'update_menu' menu.pk%}">{{ menu.name }}</a></td>
-      <td>{{ menu.price }}</td>
-      <td>{{ menu.available }}</td>
-            <td><ul>
-            {%for recipe in menu.reciperequirement_set.all%}
-            <li>{{recipe.ingredient.name}} - {{recipe.quantity}} {{recipe.ingredient.unit}}</li>
-            {%endfor%}
-          </ul>
-      </td>
-      <td><a href="{% url 'delete_menu' menu.pk%}">Delete</a></td>
-  </tr>
-  {% endfor %}
-</table>
-<a href="{% url 'add_menu' %}">Add menu</a>
-{% endblock %}
+{%extends 'base.html'%}
+{%load static%}
+{% block menu %} active {% endblock %}
+{%block content%}
+    <div class="col">
+        <h3 class="text-center" style="margin-top: 15px;">Menu</h3>
+        <div class="row">
+            <div class="col-lg-3 col-xl-4 offset-lg-4 offset-xl-4 d-lg-flex justify-content-lg-center"><a class="btn btn-primary" href="{% url 'add_menu' %}" type="button" style="margin-top: 20px;background-color: rgb(143,0,255);width: 181px;height: 38px;">Add menu</a></div>
+        </div>
+        <div class="row" style="margin-top: 20px;margin-bottom: 59px;">
+            <div class="col-lg-3 col-xl-6 offset-lg-4 offset-xl-3 d-lg-flex justify-content-lg-center"><a class="btn btn-primary" href="{% url 'add_recipe' %}" type="button" style="background-color: rgb(143,0,255);height: 42px;">Add recipe requirement to existing menu item</a></div>
+        </div>
+        <div class="row">
+        {% for item in menuitem_list %}
+            <div class="col-sm justify-content-center">
+                <div class="card" style="width: 450px; margin-bottom: 40px;" ><img class="card-img-top w-100 d-block card-img-top">
+                    <div class="card-body">
+                        <h4 class="card-title">{{item.name|title}}</h4>
+                        <h6 class="text-muted card-subtitle mb-2">${{item.price}}</h6>
+                        <p class="card-text">
+                                   <ul>
+                                    {%for recipe in item.reciperequirement_set.all%}
+                                    <li>{{recipe.ingredient.name}} - {{recipe.quantity}} {{recipe.ingredient.unit}}</li>
+                                    {%endfor%}
+                                    <p></p>
+                                    <p>Available: {{item.available}}</p>
+                                  </ul></p><a class="card-link" href="{% url 'update_menu' item.pk%}">Edit</a><a class="card-link"
+                            href="{% url 'delete_menu' item.pk%}">Delete</a></div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{%endblock%}

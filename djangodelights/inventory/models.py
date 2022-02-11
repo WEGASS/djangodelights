@@ -47,8 +47,11 @@ class RecipeRequirement(models.Model):
 class Purchase(models.Model):
     purchased_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=datetime.today())
+    # date = models.DateField(default=datetime.today().date())
+    # time = models.TimeField(default=datetime.today().time())
 
     def __str__(self):
+        # return f'{self.date} {self.time}'
         return f'{self.timestamp}'
 
     def get_absolute_url(self):

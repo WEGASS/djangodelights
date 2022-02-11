@@ -1,20 +1,33 @@
-{% extends 'base.html' %}
+{%extends 'base.html'%}
+{%load static%}
+{% block purchsases %} active {% endblock %}
+{%block content%}
+    <div class="col">
+        <h3 class="text-center" style="margin-top: 15px;">Purchases</h3>
+    </div>
+    <div class="table-responsive table-bordered" style="padding-right: 100px;padding-left: 100px;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Purchased item</th>
+                    <th>Date time</th>
+                    <th>Revenue</th>
+                </tr>
+            </thead>
+            <tbody>
+                  {%for purchase in purchase_list%}
+                  <tr>
+                      <td>{{ purchase.purchased_item.name }}</td>
+                      <td>{{purchase.timestamp}}</td>
+                      <td>{{purchase.purchased_item.price}}</td>
+                  </tr>
 
-{% block content %}
-<h1>All purchases</h1>
-<table>
-    <tr>
-        <th>Purchased items</th>
-        <th>Date time</th>
-        <th>Total cost</th>
-   </tr>
-  {%for purchase in purchase_list%}
-  <tr>
-      <td>{{ purchase.purchased_item.name }}</td>
-      <td>{{purchase.timestamp}}</td>
-      <td>{{purchase.purchased_item.price}}</td>
-  </tr>
-  {%endfor%}
-</table>
-<a href="{% url 'add_purchase' %}">Add purchase</a>
-{% endblock %}
+                  {%endfor%}
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-xl-4 offset-lg-4 d-lg-flex justify-content-lg-center"><a class="btn btn-primary" type="button" href="{% url 'add_purchase' %}">Record purchase</a></div>
+    </div>
+{%endblock%}

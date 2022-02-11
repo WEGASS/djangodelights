@@ -1,25 +1,43 @@
-{% extends 'base.html' %}
-
-{% block content %}
-<h1>Ingredients</h1>
-<table>
-    <tr>
-        <th>name</th>
-        <th>quantity</th>
-        <th>unit</th>
-        <th>price per unit</th>
-        <th>total cost</th>
-   </tr>
-  {% for ingredient in ingredient_list %}
-  <tr>
-      <td><a href="{% url 'update_ingredient' ingredient.pk%}">{{ ingredient.name }}</a></td>
-      <td>{{ ingredient.quantity }}</td>
-      <td>{{ ingredient.unit }}</td>
-      <td>{{ ingredient.unit_price }}</td>
-      <td>{% widthratio ingredient.unit_price 1 ingredient.quantity %}</td>
-      <td><a href="{% url 'delete_ingredient' ingredient.pk%}">Delete</a></td>
-  </tr>
-  {% endfor %}
-</table>
-<a href="{% url 'add_ingredient' %}">Add ingredient</a>
-{% endblock %}
+{%extends 'base.html'%}
+{%load static%}
+{% block ingredients %} active {% endblock %}
+{%block content%}
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-center" style="margin-top: 15px;">Ingredients</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive table-bordered" style="padding-right: 100px;padding-left: 100px;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Unit</th>
+                    <th>Price</th>
+                    <th>Total cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                  {% for ingredient in ingredient_list %}
+                  <tr>
+                      <td><a href="{% url 'update_ingredient' ingredient.pk%}">{{ ingredient.name }}</a></td>
+                      <td>{{ ingredient.quantity }}</td>
+                      <td>{{ ingredient.unit }}</td>
+                      <td>{{ ingredient.unit_price }}</td>
+                      <td>{% widthratio ingredient.unit_price 1 ingredient.quantity %}</td>
+                      <td style="width: 98px;"><a class="btn btn-primary" type="button" href="{% url 'delete_ingredient' ingredient.pk%}">Delete</a></td>
+                  </tr>
+                  {% endfor %}
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-xl-4 offset-lg-4 d-lg-flex justify-content-lg-center"><a class="btn btn-primary" type="button" href="{% url 'add_ingredient' %}">Add ingredient</a></div>
+    </div>
+{%endblock%}

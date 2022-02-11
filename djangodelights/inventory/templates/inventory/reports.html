@@ -1,21 +1,57 @@
-{% extends 'base.html'%}
-{% block content %}
-<h1>Reports</h1>
-<table>
-    <tr>
-        <th>Purchased items</th>
-        <th>Date time</th>
-        <th>Total cost</th>
-   </tr>
-  {%for purchase in purchases%}
-  <tr>
-      <td>{{ purchase.purchased_item.name }}</td>
-      <td>{{purchase.timestamp}}</td>
-      <td>{{purchase.purchased_item.price}}</td>
-  </tr>
-  {%endfor%}
-</table>
-Total revenue: {{total_revenue}}
-Total cost: {{total_cost}}
-Total profit: {{profit}}
-{% endblock %}
+{%extends 'base.html'%}
+{%load static%}
+{% block reports %} active {% endblock %}
+{%block content%}
+    <div class="col">
+        <h3 class="text-center" style="margin-top: 15px;">Purchases</h3>
+    </div>
+    <div class="table-responsive table-bordered" style="padding-right: 100px;padding-left: 100px;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Purchased item</th>
+                    <th>Date time</th>
+                    <th>Revenue</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  {%for purchase in purchases%}
+                  <tr>
+                      <td>{{ purchase.purchased_item.name }}</td>
+                      <td>{{purchase.timestamp}}</td>
+                      <td>{{purchase.purchased_item.price}}</td>
+                  </tr>
+                  {%endfor%}
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="features-boxed">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-center">Total</h2>
+            </div>
+            <div class="row justify-content-center features">
+                <div class="col-sm-6 col-md-5 col-lg-4 item">
+                    <div class="box"><i class="fa fa-dollar icon"></i>
+                        <h3 class="name">Total revenue</h3>
+                        <p class="text-success description">${{total_revenue|floatformat:-2}}</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-5 col-lg-4 item">
+                    <div class="box"><i class="fa fa-list-alt icon"></i>
+                        <h3 class="name">Total cost</h3>
+                        <p class="text-danger description">${{total_cost|floatformat:-2}}</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-5 col-lg-4 item">
+                    <div class="box"><i class="fa fa-check icon"></i>
+                        <h3 class="name">Total profit</h3>
+                        <p class="text-primary description">${{profit|floatformat:-2}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%endblock%}

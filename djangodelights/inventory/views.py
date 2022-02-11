@@ -129,6 +129,7 @@ class ReportsView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         purchases = Purchase.objects.all()
+        # p_group_by_date = Purchase.objects.values('date').annotate(total_price=Sum('purchased_item__price'))
         context['purchases'] = purchases
         revenue = purchases.aggregate(revenue=Sum('purchased_item__price'))['revenue']
         context['total_revenue'] = revenue
@@ -137,7 +138,7 @@ class ReportsView(LoginRequiredMixin, TemplateView):
             for ingred in purchase.purchased_item.reciperequirement_set.all():
                 total_cost += (ingred.ingredient.unit_price * ingred.quantity)
         context['total_cost'] = total_cost
-        context["profit"] = revenue - total_cost
+        context['profit'] = revenue - total_cost
         return context
 
 

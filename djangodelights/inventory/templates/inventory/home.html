@@ -1,64 +1,102 @@
 {%extends 'base.html'%}
+{%load static%}
 
 {%block content%}
-<h1>Hello, {{user.username}}!</h1>
-<h1>Ingredients</h1>
-<table>
-    <tr>
-        <th>name</th>
-        <th>quantity</th>
-        <th>unit</th>
-        <th>price per unit</th>
-        <th>total cost</th>
-   </tr>
-  {%for ingredient in ingredients%}
-  <tr>
-      <td>{{ingredient.name}}</td>
-      <td>{{ingredient.quantity}}</td>
-      <td>{{ingredient.unit}}</td>
-      <td>{{ingredient.unit_price}}</td>
-      <td>{%widthratio ingredient.unit_price 1 ingredient.quantity%}</td>
-  </tr>
-  {%endfor%}
-</table>
-
-<h1>Recipes</h1>
-<table>
-    <tr>
-        <th>name</th>
-        <th>price</th>
-        <th>available</th>
-        <th>requirements</th>
-   </tr>
-  {%for item in menu_items%}
-  <tr>
-      <td>{{item.name}}</td>
-      <td>{{item.price}}</td>
-      <td>{{item.available}}</td>
-      <td><ul>
-            {%for recipe in item.reciperequirement_set.all%}
-            <li>{{recipe.ingredient.name}} - {{recipe.quantity}} {{recipe.ingredient.unit}}</li>
-            {%endfor%}
-          </ul>
-      </td>
-
-  </tr>
-  {%endfor%}
-</table>
-
-<h1>Today's purchases</h1>
-<table>
-    <tr>
-        <th>Purchased items</th>
-        <th>Date time</th>
-        <th>Total cost</th>
-   </tr>
-  {%for purchase in today_purchases%}
-  <tr>
-      <td>{{ purchase.purchased_item.name }}</td>
-      <td>{{purchase.timestamp}}</td>
-      <td>{{purchase.purchased_item.price}}</td>
-  </tr>
-  {%endfor%}
-</table>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-center" style="padding: 12px;">Hello, {{user.username}}!</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-center" style="margin-top: 15px;">Ingredients</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div></div>
+    <div class="table-responsive table-bordered" style="padding-right: 100px;padding-left: 100px;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Unit</th>
+                    <th>Price</th>
+                    <th>Total cost, $</th>
+                </tr>
+            </thead>
+            <tbody>
+                  {%for ingredient in ingredients%}
+                  <tr>
+                      <td>{{ingredient.name}}</td>
+                      <td>{{ingredient.quantity}}</td>
+                      <td>{{ingredient.unit}}</td>
+                      <td>{{ingredient.unit_price}}</td>
+                      <td>{%widthratio ingredient.unit_price 1 ingredient.quantity%}</td>
+                  </tr>
+                  {%endfor%}
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col">
+                <h3 class="text-center" style="margin-top: 15px;">Menu</h3>
+                <div class="row">
+                {% for item in menu_items %}
+                    <div class="col-sm justify-content-center">
+                        <div class="card" style="width: 450px; margin-bottom: 40px;" ><img class="card-img-top w-100 d-block card-img-top">
+                            <div class="card-body">
+                                <h4 class="card-title">{{item.name|title}}</h4>
+                                <h6 class="text-muted card-subtitle mb-2">${{item.price}}</h6>
+                                <p class="card-text">
+                                           <ul>
+                                            {%for recipe in item.reciperequirement_set.all%}
+                                            <li>{{recipe.ingredient.name}} - {{recipe.quantity}} {{recipe.ingredient.unit}}</li>
+                                            {%endfor%}
+                                            <p></p>
+                                            <p>Available: {{item.available}}</p>
+                                          </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h3 class="text-center" style="margin-top: 15px;">Today's purchases</h3>
+        </div>
+    </div>
+    <div class="table-responsive table-bordered" style="padding-right: 100px;padding-left: 100px;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Purchased item</th>
+                    <th>Date time</th>
+                    <th>Revenue</th>
+                </tr>
+            </thead>
+            <tbody>
+              {%for purchase in today_purchases%}
+              <tr>
+                  <td>{{ purchase.purchased_item.name }}</td>
+                  <td>{{purchase.timestamp}}</td>
+                  <td>{{purchase.purchased_item.price}}</td>
+              </tr>
+              {%endfor%}
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>
 {%endblock%}
